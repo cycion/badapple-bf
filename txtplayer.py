@@ -2,6 +2,8 @@ import cv2, time, os
 from concurrent.futures import ThreadPoolExecutor
 from threading import Barrier
 
+FRAME_DELAY = 1.5
+
 cap = cv2.VideoCapture("badapple.mp4")
 frameCount = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 PATH = ["ori", "bf", "bf2", "bf3"]
@@ -40,7 +42,7 @@ def play(path, name):
         else:
             barrier.wait()
         # Wait for file watcher to detect change. The higher this value, the lower the framerate, the better the synchronisation
-        time.sleep(1.5)
+        time.sleep(FRAME_DELAY)
 
 # Parralel to makes the animation in 4 files looks more synchronized
 with ThreadPoolExecutor(max_workers=4) as executor:
